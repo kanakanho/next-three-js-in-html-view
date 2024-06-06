@@ -7,10 +7,12 @@ export const Message = () => {
     <div
       style={{
         width: '1000px',
+        height: '500px',
         border: 'solid aqua',
+        overflow: 'hidden',
         backgroundColor: 'rgba(255,255,99,0.4)',
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
         gap: '20px',
       }}
     >
