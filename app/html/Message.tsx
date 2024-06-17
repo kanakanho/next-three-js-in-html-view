@@ -4,11 +4,12 @@ import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
 import { JSX } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { ToHtml } from '../components/ToHtml';
 
 export const Message = () => {
   const [html, setHtml] = useState<string | JSX.Element | JSX.Element[]>('');
   const [md, setMd] = useState<string>('');
+  const [css, setCss] = useState<string>('');
 
   useEffect(() => {
     fetch('http://localhost:8787/api/jsx')
@@ -28,16 +29,19 @@ export const Message = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch('http://localhost:8787/api/css')
+      .then((res) => res.text())
+      .then((data) => {
+        setCss(data);
+      });
+  }, []);
+
   return (
-    <div
-      style={{
-        width: '1000px',
-        height: '500px',
-      }}
-    >
-      <h2>1. 目的</h2>
-      {html}
-      <ReactMarkdown>{md}</ReactMarkdown>
-    </div>
+    <>
+      <style>{css}</style>
+      <div className='markdown'>{html}</div>
+      <ToHtml content={md} styles={css} />
+    </>
   );
 };
